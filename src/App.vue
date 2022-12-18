@@ -11,7 +11,7 @@
                   <cafe-outline />
                 </n-icon>
               </template>
-              By me a cofeee
+              By me a coffee
             </n-button>
             <n-popup v-model:show="showAbout" trigger="click" title="About">
               <template #trigger>
