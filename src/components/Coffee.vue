@@ -2,7 +2,7 @@
   <div class="cofee">
     <article>
       <p style="font-size: 1.2em;">
-        Made with ❤️ by <a target="_blank" href="https://twitter.com/MauriceConrad">Maurice Conrad</a>
+        Made with ❤️ by <a target="_blank" href="https://twitter.com/Maurice_Conrad">Maurice Conrad</a>
         <br />
         Project on <a target="_blank" href="https://github.com/orgs/ElonjetApp/repositories">GitHub</a>
       </p>
