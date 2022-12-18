@@ -43,7 +43,7 @@ jobs:
           context: .
           file: ./dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spa-server:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/elonjet-client:latest
 
       - name: Cleanup docker environment
         run: rm -rf /home/runner/.docker/config.json
