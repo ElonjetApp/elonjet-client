@@ -22,21 +22,20 @@ export default function useDrawMap(mapRef: Ref<mapboxgl.Map | undefined>, trace:
   });
 
   const markersGeoJSON = computed(() => {
+    const lastCoords = routeData.value.geometry.coordinates[routeData.value.geometry.coordinates.length - 1];
     return {
       type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: routeData.value.geometry.coordinates[routeData.value.geometry.coordinates.length - 1] ?? []
-          },
-          properties: {
-            title: 'Mapbox',
-            description: 'Washington, D.C.'
-          }
+      features: lastCoords ? ([{
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: lastCoords
+        },
+        properties: {
+          title: 'Mapbox',
+          description: 'Washington, D.C.'
         }
-      ]
+      }]) : []
     }
   });
 
@@ -50,16 +49,18 @@ export default function useDrawMap(mapRef: Ref<mapboxgl.Map | undefined>, trace:
     
     if (source) {
       (source as any).setData(routeData.value);
-      const lngs = routeData.value.geometry.coordinates.map(([ , longitude ]) => longitude);
+      const lngs = routeData.value.geometry.coordinates.map(([ , longitude ]) => longitude);      
       const lats = routeData.value.geometry.coordinates.map(([ latitude ]) => latitude);
       const lastCoordinates = routeData.value.geometry.coordinates[routeData.value.geometry.coordinates.length - 1];
-      mapRef.value?.fitBounds([
-         [Math.min(...lats), Math.max(...lngs)],
-         [Math.max(...lats), Math.min(...lngs)]
-      ], {
-        padding: 120,
-        offset: [0, 0]
-      });
+      if (lngs.length > 0 && lats.length > 0) {
+        mapRef.value?.fitBounds([
+           [Math.min(...lats), Math.max(...lngs)],
+           [Math.max(...lats), Math.min(...lngs)]
+        ], {
+          padding: 120,
+          offset: [0, 0]
+        });
+      }
       // mapRef.value?.flyTo({
       //   center: lastCoordinates as any as LngLat,
 
@@ -71,6 +72,8 @@ export default function useDrawMap(mapRef: Ref<mapboxgl.Map | undefined>, trace:
       for (const marker of markers.value) {
         marker.remove();
       }
+      console.log(markersGeoJSON.value.features);
+      
       for (const feature of markersGeoJSON.value.features) {
         // create a HTML element for each feature
         const el = document.createElement('div');
@@ -111,7 +114,7 @@ export default function useDrawMap(mapRef: Ref<mapboxgl.Map | undefined>, trace:
     }
   }
 
-  //watch(routeData, setRoute);
+  watch(routeData, setRoute);
 
   watch(mapRef, () => {
     if (!initialized) {

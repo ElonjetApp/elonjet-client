@@ -6,10 +6,18 @@ import _ from 'lodash'
 const EventSource = NativeEventSource || EventSourcePolyfill;
 
 export type ElonTraceSingleRecord = ElonTraceRecord & { datetime: string; };
+// export type ElonTraceSingleRecord = {
+//   datetime: string;
+//   records: [number, number, number][];
+// }
+export type ElonTraceMinified = {
+  datetime: string;
+  records: [number, number, number][];
+}
 
 export type TraceMessage = {
   type: 'update' | 'initialization';
-  data: ElonTrace[];
+  data: ElonTraceMinified[];
 }
 
 async function getTrace(id: string) {
@@ -19,20 +27,24 @@ async function getTrace(id: string) {
 }
 
 export default function useElonJet(jetId: string) {
-  const traceSource = ref<ElonTrace[]>();
+  const traceSource = ref<ElonTraceMinified[]>();
   const fetchStatus = async () => {
     //traceSource.value = await getTrace(jetId);
   }
 
-  const connect = () => {
+  const connect = async () => {
     const url = `${ import.meta.env.VITE_BACKEND_BASE_URL }/api/trace/${ jetId }`;
-    const connection = new EventSourcePolyfill(url, {
+    const response = await fetch(url);
+    const initData = await response.json();
+    traceSource.value = initData;
+
+    const connection = new EventSource(`${ url }?${ new URLSearchParams({ ignoreInitialization: 'true' }).toString() }`, {
       headers: {
         'Accept': 'text/event-stream'
       }
-    });
-    connection.addEventListener('message', ({ data }) => {
+    } as any);
 
+    connection.addEventListener('message', ({ data }) => {
       const newTrace = JSON.parse(data) as TraceMessage;
 
       
@@ -54,16 +66,21 @@ export default function useElonJet(jetId: string) {
           }
         }
         traceSource.value = _.cloneDeep(traceSource.value);
-      }
+      }     
+    
+      
     });
+    
+    
   }
   connect();
 
   const trace = computed(() => {
     if (traceSource.value) {
+
       return ([] as ElonTraceSingleRecord[]).concat(...traceSource.value.map(({ datetime, records }) => {
         if (records) {
-          return records.map(({ altitude, longitude, latitude }) => {
+          return records.map(([ altitude, latitude, longitude ]) => {
             return { altitude, longitude, latitude, datetime };
           });
         }
