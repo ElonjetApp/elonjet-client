@@ -4,7 +4,7 @@
       <p style="font-size: 1.2em;">
         Made with ❤️ by <a target="_blank" href="https://twitter.com/MauriceConrad">Maurice Conrad</a>
         <br />
-        Project on <a target="_blank" href="https://twitter.com/MauriceConrad">GitHub</a>
+        Project on <a target="_blank" href="https://github.com/orgs/ElonjetApp/repositories">GitHub</a>
       </p>
       <p>
         <h2>Send me a tip</h2>
