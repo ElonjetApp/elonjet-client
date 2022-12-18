@@ -94,7 +94,8 @@ body, html, #app {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     display: grid;
-    grid-template-columns: auto auto;
+    //grid-template-columns: auto auto;
+    grid-template-columns: auto;
     @media screen and (max-width: 600px) {
       grid-template-columns: auto;
     }
