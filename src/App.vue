@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider>
+  <n-config-provider :theme="darkTheme">
     <n-message-provider>
       <n-popup-provider>
         <div class="app">
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { NConfigProvider, NMessageProvider, NIcon, NButton } from 'naive-ui'
+import { NConfigProvider, NMessageProvider, NIcon, NButton, darkTheme } from 'naive-ui'
 import { NPopup, NPopupProvider } from 'naive-tools'
 import 'naive-tools/style.css'
 import ElonMap from './components/ElonMap.vue'
@@ -62,6 +62,7 @@ body, html, #app {
   margin: 0;
   padding: 0;
   font-family: 'Jost', sans-serif;
+  background-color: rgb(14, 14, 14);
 }
 
 </style>
@@ -69,6 +70,8 @@ body, html, #app {
 <style scoped lang="scss">
 .n-config-provider {
   height: 100%;
+  --popup-background-color: rgb(28, 28, 30);
+  color: #fff;
 }
 .app {
   height: 100%;

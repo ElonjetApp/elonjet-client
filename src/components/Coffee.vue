@@ -1,7 +1,7 @@
 <template>
   <div class="cofee">
     <article>
-      <p>
+      <p style="font-size: 1.2em;">
         Made with ❤️ by <a target="_blank" href="https://twitter.com/MauriceConrad">Maurice Conrad</a>
         <br />
         Project on <a target="_blank" href="https://twitter.com/MauriceConrad">GitHub</a>
@@ -31,6 +31,9 @@ import { NButton } from 'naive-ui'
 article {
   text-align: center;
   padding: 0 20px;
+  a {
+    color: inherit;
+  }
   h2 {
 
   }
@@ -41,7 +44,7 @@ article {
 }
 code {
   padding: 2px 5px;
-  background-color: rgb(237, 237, 237);
+  background-color: rgb(45, 45, 45);
   margin-top: 5px;
   display: inline-block;
   word-wrap: break-word;
