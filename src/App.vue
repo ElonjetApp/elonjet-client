@@ -5,14 +5,14 @@
         <div class="app">
           <ElonMap />
           <div class="actions">
-            <n-button tertiary type="success" class="custom" @click="showAbout = true">
+            <!-- <n-button tertiary type="success" class="custom" @click="showAbout = true">
               <template #icon>
                 <n-icon>
                   <cafe-outline />
                 </n-icon>
               </template>
               By me a coffee
-            </n-button>
+            </n-button> -->
             <n-popup v-model:show="showAbout" trigger="click" title="About">
               <template #trigger>
                 <n-button tertiary type="success" class="custom">
