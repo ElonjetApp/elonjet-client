@@ -53,18 +53,20 @@ export default function useDrawMap(mapRef: Ref<mapboxgl.Map | undefined>, trace:
       const lats = routeData.value.geometry.coordinates.map(([ latitude ]) => latitude);
       const lastCoordinates = routeData.value.geometry.coordinates[routeData.value.geometry.coordinates.length - 1];
       if (lngs.length > 0 && lats.length > 0) {
-        mapRef.value?.fitBounds([
-           [Math.min(...lats), Math.max(...lngs)],
-           [Math.max(...lats), Math.min(...lngs)]
-        ], {
-          padding: 120,
-          offset: [0, 0]
+        // mapRef.value?.fitBounds([
+        //    [Math.min(...lats), Math.max(...lngs)],
+        //    [Math.max(...lats), Math.min(...lngs)]
+        // ], {
+        //   padding: 120,
+        //   offset: [0, 0]
+        // });
+      }
+      if (lastCoordinates) {
+        mapRef.value?.flyTo({
+          center: lastCoordinates as any as LngLat,
+          zoom: 3
         });
       }
-      // mapRef.value?.flyTo({
-      //   center: lastCoordinates as any as LngLat,
-
-      // });
       
     }
 
